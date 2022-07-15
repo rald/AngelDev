@@ -84,4 +84,8 @@
 	hindi kita mahal
 	si %love ang mahal ko
 
+?sino si %love
+	edi ang mahal ko
+	si %love ay ang mahal ko
+
 
