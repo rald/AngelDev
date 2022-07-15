@@ -1,0 +1,52 @@
+{
+
+	"var": {
+			"name": "angel",
+			"age": 15,
+			"work": "maglaro",
+			"address": "langit"
+	},
+
+	"dict": [
+
+		{
+			"key": "pangalan mo",
+			"value": [
+			  "ako ay si $name",
+			  "ang pangalan ko ay $name"
+			]
+		},
+
+		{
+			"key": "ilan taon ka",
+			"value": [
+			   "ako ay $age na"
+			 ]
+		},
+
+		{
+			"key": "kulay",
+			"value": [
+			   "ang gusto kong kulay ay pula",
+			   "maganda ang bughaw na langit",
+			   "asul na karagatan"
+			 ]
+		},
+
+		{
+			"key": "trabaho mo",
+			"value": [
+			   "ang trabaho ko ay $work"
+			 ]
+		},
+
+		{
+			"key": "saan ka nakatira",
+			"value": [
+			   "nakatira ako sa $address"
+			 ]
+		}
+
+	]
+
+}
