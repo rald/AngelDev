@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define Vector_Length(vector) ((Vector*)(vector))->length
+#define Vector_Length(vector) ((Vector*)vector)->length
 
 typedef struct Vector Vector;
 
