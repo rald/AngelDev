@@ -266,8 +266,6 @@ int save(char *filename) {
 		fprintf(fout, "\n");
 	}
 
-	fprintf(fout, "\n");
-
 	fclose(fout);
 
 	return 0;
