@@ -42,11 +42,11 @@
 	dito po sa %home
 
 ?%work
-	opo gusto kong mag %work
+	opo gusto kong pong mag %work
 	%work po ang gusto ko parati
 
 ?laruan
-	ang gusto kong laruan ay %toy
+	ang gusto ko pong laruan ay %toy
 
 ?%toy
 	ay gusto ko yang %toy
@@ -79,7 +79,7 @@
 	hindi kita mahal
 	si %love ang mahal ko
 
-?mahal kita %firstname
+?mahal kita
 	ayoko sa iyo
 	hindi kita mahal
 	si %love ang mahal ko

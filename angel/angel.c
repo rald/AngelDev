@@ -131,6 +131,12 @@ char *strlwr(char *s) {
 	return s;
 }
 
+char *remnl(char *s) {
+	char *p=strchr(s,'\0');
+	if(p) *p='\0';
+	return s;
+}
+
 void varsDestroy(void *data) {
 	free(((Var *)data)->key);
 	((Var *)data)->key = NULL;
@@ -144,9 +150,9 @@ void varsDestroy(void *data) {
 
 void varsPrint(void *data) {
 	printf(
-		"key: %s value: %s\n",
-		((Var *)data)->key,
-		((Var *)data)->value);
+	  "key: %s value: %s\n",
+	  ((Var *)data)->key,
+	  ((Var *)data)->value);
 }
 
 void dictDestroy(void *data) {
@@ -161,8 +167,8 @@ void dictDestroy(void *data) {
 
 void dictPrint(void *data) {
 	printf(
-		"key: %s\n",
-		((Dict *)data)->key);
+	  "key: %s\n",
+	  ((Dict *)data)->key);
 
 	Vector_Print(((Dict *)data)->value);
 }
@@ -179,9 +185,8 @@ void strPrint(void *data) {
 int load(char *filename) {
 	FILE *fin;
 
-	char *line = NULL;
-	size_t llen = 0;
-	ssize_t rlen = 0;
+	char line1[STRING_MAX];
+	char line2[STRING_MAX];
 
 	vars = Vector_Create(0, varsPrint, varsDestroy);
 	dicts = Vector_Create(0, dictPrint, dictDestroy);
@@ -191,15 +196,13 @@ int load(char *filename) {
 		return 1;
 	}
 
-	while ((rlen = getline(&line, &llen, fin)) != -1) {
-		char *p = strchr(line, '\n');
-		if (p)
-			*p = '\0';
-
+	while (fgets(line1,STRING_MAX-2,fin)) {
 		char key[STRING_MAX];
 		char value[STRING_MAX];
 
-		if (line[0] == '%' && sscanf(line, "%[^=]=%[^\n]\n", key, value) == 2) {
+		remnl(line1);
+
+		if (line1[0] == '%' && sscanf(line1, "%[^=]=%[^\n]\n", key, value) == 2) {
 			Var *var = malloc(sizeof(*var));
 
 			strtrm(key);
@@ -209,20 +212,20 @@ int load(char *filename) {
 			var->value = strdup(value);
 
 			Vector_Append(vars, var);
-		} else if (sscanf(line, "?%[^\n]\n", key) == 1) {
+
+		} else if (sscanf(line1, "?%[^\n]\n", key) == 1) {
 			Dict *d = malloc(sizeof(*dicts));
 
 			d->key = strdup(key);
 			d->value = Vector_Create(0, strPrint, strDestroy);
 
-			while ((rlen = getline(&line, &llen, fin)) != -1) {
-				char *p = strchr(line, '\n');
-				if (p)
-					*p = '\0';
+			while (fgets(line2,STRING_MAX-2,fin)) {
 
-				if (line[0] == '\t') {
-					if (strlen(line + 1) > 0) {
-						Vector_Append(d->value, strdup(strtrm(line + 1)));
+				remnl(line2);
+
+				if (line2[0] == '\t') {
+					if (strlen(line2 + 1) > 0) {
+						Vector_Append(d->value, strdup(strtrm(line2 + 1)));
 					}
 				} else
 					break;
@@ -230,11 +233,9 @@ int load(char *filename) {
 
 			Vector_Append(dicts, d);
 		}
-
-		free(line);
-		line = NULL;
-		llen = 0;
 	}
+
+	fclose(fin);
 
 	return 0;
 }
@@ -247,14 +248,14 @@ int save(char *filename) {
 		return 1;
 	}
 
-	for (size_t i = 0; i < vars->length; i++) {
+	for (size_t i = 0; i < Vector_Length(vars); i++) {
 		Var *var = Vector_Get(vars, i);
 		fprintf(fout, "%s = %s\n", var->key, var->value);
 	}
 
 	fprintf(fout, "\n\n\n");
 
-	for (size_t i = 0; i < dicts->length; i++) {
+	for (size_t i = 0; i < Vector_Length(dicts); i++) {
 		Dict *dict = Vector_Get(dicts, i);
 		fprintf(fout, "?%s\n", dict->key);
 
@@ -273,7 +274,7 @@ int save(char *filename) {
 }
 
 char *varrpc(char *str) {
-	for (size_t i = 0; i < vars->length; i++) {
+	for (size_t i = 0; i < Vector_Length(vars); i++) {
 		Var *var = Vector_Get(vars, i);
 		strrpc(str, var->key, var->value);
 	}
@@ -362,30 +363,28 @@ int main() {
 		dictStart = dictIndex;
 
 		for (;;) {
-		
+
 			Dict *dict = Vector_Get(dicts, dictIndex);
 
 			strcpy(key, dict->key);
 
 			varrpc(key);
 
-
-
-			if (strcasestr(line, key) || match(key, line)){ 
+			if (strcasestr(line, key) || match(key, line)) {
 				Vector* vec=dict->value;
 
-				char *str=Vector_Get(vec,rand()%vec->length);
-				
+				char *str=Vector_Get(vec,rand()%Vector_Length(vec));
+
 				strcpy(value,str);
 
 				varrpc(value);
 
 				type(value);
-				
+
 				break;
 			}
 
-			dictIndex = (dictIndex + 1) % dicts->length;
+			dictIndex = (dictIndex + 1) % Vector_Length(dicts);
 
 			if (dictIndex == dictStart) {
 				break;
