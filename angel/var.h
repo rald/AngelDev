@@ -6,8 +6,8 @@
 typedef struct Var Var;
 
 struct Var {
-	char *name;
-	char *value;	
+    char *name;
+    char *value;
 };
 
 
@@ -15,33 +15,38 @@ struct Var {
 #ifdef VAR_IMPLEMENTATION
 
 
+
 Var *Var_Create(char *name,char *value) {
-	Var *var=malloc(sizeof(*var));
-	if(var) {
-		var->name=strdup(name);
-		var->value=strdup(value);
-	}
-	return var;
+    Var *var=malloc(sizeof(*var));
+    if(var) {
+        var->name=strdup(name);
+        var->value=strdup(value);
+    }
+    return var;
 }
+
 
 
 void Var_Destroy(void *data) {
 
-	free(((Var*)data)->name);
-	((Var*)data)->name=NULL;
+    free(((Var*)data)->name);
+    ((Var*)data)->name=NULL;
 
-	free(((Var*)data)->value);
-	((Var*)data)->value=NULL;
+    free(((Var*)data)->value);
+    ((Var*)data)->value=NULL;
+
+    free(data);
+    data=NULL;
 
 }
 
 
 
 void Var_Print(void *data) {
-	printf("name: %s value: %s\n",
-		((Var*)data)->name,
-		((Var*)data)->value
-	);
+    printf("name: %s value: %s\n",
+           ((Var*)data)->name,
+           ((Var*)data)->value
+          );
 }
 
 
