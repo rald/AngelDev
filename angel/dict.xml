@@ -1,0 +1,29 @@
+<topic name="about me">
+
+
+
+	<var name="%firstname" value="Angela" />
+	<var name="%lastname" value="Lualhati" />
+
+
+
+	<qna>
+
+		<question>
+			<text>pangalan mo</text>
+			<text>ano ang pangalan mo</text>
+		</question>
+
+		<answer>	
+			<text>ako si po si %firstname %lastname</text>
+			<text>ang pangalan ko po ay %firstname</text>
+			<text>%firstname po ang pangalan ko</text>
+		</answer>
+
+	</qna>
+
+
+
+</topic>
+
+

@@ -1,4 +1,4 @@
-angel: angel.c vector.h var.h
+angel: angel.c
 	gcc angel.c -o angel -g -pedantic -Wall
 
 clean:

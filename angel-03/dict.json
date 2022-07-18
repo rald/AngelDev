@@ -1,0 +1,36 @@
+{
+
+	"topics": [
+
+		{ 
+
+			"name": "about me",
+		
+			"variables": {
+				"my_firstname": "Angela",
+				"my_lastname": "Lualhati",
+				"my_home": "langit",
+				"my_love": "Angelo",
+				"my_favorite_color": "red",
+				"my_favorite_food": "apple"
+			},
+
+			"qnas": [
+
+				{ 
+					"Q": "anong pangalan mo", 
+					"A": "%firstname %lastname"
+				},
+
+				{ 
+					"Q": "sino ang mahal mo", 
+					"A": "si %love"
+				}
+				
+			]	
+						
+		}
+		
+	]
+	
+}

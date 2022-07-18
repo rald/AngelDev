@@ -6,7 +6,3 @@
 %home = langit
 %toy = teddy bear
 %love = Angelo
-
-?pangalan mo
-	%firstname po
-	ako po si %firstname %lastname
